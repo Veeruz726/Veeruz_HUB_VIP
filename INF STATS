@@ -1,3 +1,5 @@
+local Player = game.Players.LocalPlayer
+
 local x = "kys"
 
 local Player = game.Players.LocalPlayer
