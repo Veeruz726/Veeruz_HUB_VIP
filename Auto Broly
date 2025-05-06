@@ -265,7 +265,7 @@ queueButton.MouseButton1Click:Connect(teleportPlayer)
 slotsButton.MouseButton1Click:Connect(toggleSlotsMenu)
 
 -- Esperar 10 segundos antes de teletransportar al queue automáticamente
-task.delay(10, function()
+task.delay(10000, function()
     local teleportService = game:GetService("TeleportService")
     local placeId = 3565304751 -- ID del mundo
     local player = game.Players.LocalPlayer
