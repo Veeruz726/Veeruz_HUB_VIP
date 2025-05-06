@@ -586,6 +586,3 @@ Player.Character:WaitForChild("PowerOutput", 30)
 task.wait(Settings.CharacterDelayTime)
 
 end
-end
-end 
-end
