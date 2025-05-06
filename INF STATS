@@ -1,7 +1,3 @@
-_G.StopInfStats = false
-
-while not _G.StopInfStats do
-   -- Lógica infinita o repetitiva
 local Player = game.Players.LocalPlayer
 
 local x = "kys"
@@ -589,6 +585,4 @@ task.wait(0.5)
 Player.Character:WaitForChild("PowerOutput", 30)
 task.wait(Settings.CharacterDelayTime)
 
-end
-   task.wait()
 end
