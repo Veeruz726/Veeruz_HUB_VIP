@@ -294,7 +294,7 @@ Conn = Player.CharacterAdded:Connect(function()
     -- Teletransportar al personaje a una posición específica
     repeat
         task.wait()
-        Player.Character.HumanoidRootPart.CFrame = CFrame.new(-569.78302, 23.587471, -2883.4939)
+        Player.Character.HumanoidRootPart.CFrame = CFrame.new(2643.00, 4029.78, -2274.12)
     until Player.Character:FindFirstChild("PowerOutput")
 
     -- Conexión secundaria: Monitorear cambios en el texto de ChatGui
