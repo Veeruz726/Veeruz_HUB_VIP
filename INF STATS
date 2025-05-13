@@ -344,7 +344,7 @@ Conn = Player.CharacterAdded:Connect(function()
             local Char = Player.Character
 
             -- Intentar cambiar ranura nuevamente después de 6 segundos
-            task.delay(4, function()
+            task.delay(2, function()
                 Stop = false
                 if Player.Character == Char then
                     if took == "namek" then
@@ -376,7 +376,7 @@ task.spawn(function()
                 repeat
                     Talk("Character Slot Changer", {"Yes", "k", Settings.NamekSlot}, Settings.WaitTimeSlotChange + 0.3, {"Change Character Slots?", "Alright", "Which slot would you like to play in?", "Loading!"}, true, true)
 
-                    task.wait(4)
+                    task.wait(2)
 
                     if Tries >= 3 then
                         makefolder("VeeruzRejoin")
@@ -571,6 +571,15 @@ pcall(function()
         {"Change Character Slots?", "Alright", "Which slot would you like to play in?", "Loading!"}, true)
 end)
 
+-- Esperar a que se añada un nuevo personaje
+Player.CharacterAdded:Wait()
+
+-- Esperar hasta que termine el proceso de reparación si está activo
+if Fixing then
+    repeat task.wait() until not Fixing
+end
+
+task.wait(0.5)
 Player.Character:WaitForChild("PowerOutput", 30)
 task.wait(Settings.CharacterDelayTime)
 
