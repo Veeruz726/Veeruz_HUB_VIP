@@ -119,7 +119,7 @@ local function Talk(NPC, Content, WaitTime, Texts, Wait, SkipStop)
                 task.wait()
             until PG.HUD.Bottom.ChatGui.TextLabel.Text == "Which slot would you like to play in?"
 
-            task.wait(Settings.WaitTimeSlotChange + 0.50)
+            task.wait(Settings.WaitTimeSlotChange + 0.1)
 
             Player.Backpack.ServerTraits.ChatAdvance:FireServer({Content[3]})
 
@@ -197,6 +197,26 @@ PG.ChildAdded:Connect(function(Child)
                         if Tries >= 3 then
                             makefolder("Haunt")
                         end
+
+                        if Player.Character.Race.Value ~= "Namekian" then
+                            Tries += 1
+                        end
+
+                    until Player.Character.Race.Value == "Namekian"
+
+                    Talk("Start New Game [Redo Character]", {"No", "k", "No"}, 0.6, nil, false, true)
+
+                elseif Player.Character.Race.Value == "Namekian" then
+                    Talk("Character Slot Changer", {"Yes", "k", Settings.NamekSlot}, Settings.WaitTimeSlotChange + 0.3, {"Change Character Slots?", "Alright", "Which slot would you like to play in?", "Loading!"}, true, true)
+
+                    task.wait(6)
+
+                    Talk("Start New Game [Redo Character]", {"No", "k", "No"}, 0.6, nil, false, true)
+                end
+            end
+        end)
+    end
+end)
 
 if not Settings.IsPointSlotANamekian and Player.Character.Race.Value ~= "Namekian" then
     Talk("Character Slot Changer", {"Yes", "k", Settings.NamekSlot}, Settings.WaitTimeSlotChange, {"Change Character Slots?", "Alright", "Which slot would you like to play in?", "Loading!"}, true)
