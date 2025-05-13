@@ -190,7 +190,7 @@ PG.ChildAdded:Connect(function(Child)
                     repeat
                         Talk("Character Slot Changer", {"Yes", "k", Settings.NamekSlot}, Settings.WaitTimeSlotChange + 0.3, {"Change Character Slots?", "Alright", "Which slot would you like to play in?", "Loading!"}, true, true)
 
-                        task.wait(6)
+                        task.wait(4)
 
                         if Tries >= 3 then
                             makefolder("Haunt")
@@ -279,7 +279,7 @@ if tonumber(Player.PlayerGui.HUD.Bottom.Stats.LVL.Val.Text) < 55 then
         task.wait(3)
     end
 else
-    print("Slot Namekiano ha alcanzado el nivel 55.")
+    print("Slot Namekiano ha alcanzado el nivel 75.")
     -- Aquí puedes añadir cualquier otra acción específica para nivel 55 o superior, si lo necesitas.
 end
 
@@ -344,7 +344,7 @@ Conn = Player.CharacterAdded:Connect(function()
             local Char = Player.Character
 
             -- Intentar cambiar ranura nuevamente después de 6 segundos
-            task.delay(6, function()
+            task.delay(4, function()
                 Stop = false
                 if Player.Character == Char then
                     if took == "namek" then
@@ -376,7 +376,7 @@ task.spawn(function()
                 repeat
                     Talk("Character Slot Changer", {"Yes", "k", Settings.NamekSlot}, Settings.WaitTimeSlotChange + 0.3, {"Change Character Slots?", "Alright", "Which slot would you like to play in?", "Loading!"}, true, true)
 
-                    task.wait(6)
+                    task.wait(4)
 
                     if Tries >= 3 then
                         makefolder("VeeruzRejoin")
@@ -527,7 +527,7 @@ pcall(function()
 
     -- Cambiar el texto del nivel de estadísticas
     pcall(function()
-        PG.HUD.Bottom.Stats.Labvel.TextLabel.Text = "Veeruz_INF_Stats_V2"
+        PG.HUD.Bottom.Stats.Labvel.TextLabel.Text = "INF_VIP_VEERUZ"
     end)
 
     -- Cambiar colores de la interfaz
@@ -541,8 +541,8 @@ pcall(function()
     -- Verificar si los puntos de estadísticas han alcanzado el máximo
     if tonumber(Player.PlayerGui.HUD.Bottom.Stats.StatPoints.Val.Text) >= Settings.MaxPoints then
         Finished = true
-        PG.HUD.Bottom.Stats.Labvel.TextLabel.Text = "Veeruz_INF_Stats_V2 | Disfrutalo"
-        SendNotification("Veeruz", "Disfrutalo", 5)
+        PG.HUD.Bottom.Stats.Labvel.TextLabel.Text = "Terminaste | Puntos Max"
+        SendNotification("Veeruz", "Puntos Max", 5)
         breakk = true -- Señalar que se debe interrumpir el flujo principal
         return
     end
@@ -571,15 +571,6 @@ pcall(function()
         {"Change Character Slots?", "Alright", "Which slot would you like to play in?", "Loading!"}, true)
 end)
 
--- Esperar a que se añada un nuevo personaje
-Player.CharacterAdded:Wait()
-
--- Esperar hasta que termine el proceso de reparación si está activo
-if Fixing then
-    repeat task.wait() until not Fixing
-end
-
-task.wait(0.5)
 Player.Character:WaitForChild("PowerOutput", 30)
 task.wait(Settings.CharacterDelayTime)
 
