@@ -99,7 +99,7 @@ local function Talk(NPC, Content, WaitTime, Texts, Wait, SkipStop)
         if Wait then
             WaitTill(Player.PlayerGui.HUD.Bottom.ChatGui.TextLabel, Texts[idx], WaitTime, NPC)
         else
-            task.wait(Settings.WaitTimeTalk + 0.50)
+            task.wait(Settings.WaitTimeTalk + 0.40)
         end
 
         if not SkipStop and Stop then
@@ -149,7 +149,7 @@ if Player.PlayerGui:FindFirstChild("HUD") and not Finished then
                 repeat
                     Talk("Character Slot Changer", {"Yes", "k", Settings.NamekSlot}, Settings.WaitTimeSlotChange + 0.3, {"Change Character Slots?", "Alright", "Which slot would you like to play in?", "Loading!"}, true, true)
 
-                    task.wait(6)
+                    task.wait(5)
 
                     if Tries >= 3 then
                         makefolder("HauntRejoin")
@@ -166,7 +166,7 @@ if Player.PlayerGui:FindFirstChild("HUD") and not Finished then
             elseif Player.Character.Race.Value == "Namekian" then
                 Talk("Character Slot Changer", {"Yes", "k", Settings.NamekSlot}, Settings.WaitTimeSlotChange + 0.3, {"Change Character Slots?", "Alright", "Which slot would you like to play in?", "Loading!"}, true, true)
 
-                task.wait(6)
+                task.wait(5)
 
                 Talk("Start New Game [Redo Character]", {"No", "k", "No"}, 0.6, nil, false, true)
             end
@@ -182,7 +182,7 @@ PG.ChildAdded:Connect(function(Child)
             if Player.PlayerGui.HUD.Bottom.ChatGui.TextLabel.Text == "Mr Popo is a nice guy" then
                 Stop = true
 
-                task.wait(6 + Settings.CharacterDelayTime)
+                task.wait(5 + Settings.CharacterDelayTime)
 
                 if not Settings.IsPointSlotANamekian and Player.Character.Race.Value ~= "Namekian" then
                     local Tries = 0
@@ -190,7 +190,7 @@ PG.ChildAdded:Connect(function(Child)
                     repeat
                         Talk("Character Slot Changer", {"Yes", "k", Settings.NamekSlot}, Settings.WaitTimeSlotChange + 0.3, {"Change Character Slots?", "Alright", "Which slot would you like to play in?", "Loading!"}, true, true)
 
-                        task.wait(4)
+                        task.wait(1)
 
                         if Tries >= 3 then
                             makefolder("Haunt")
@@ -207,7 +207,7 @@ PG.ChildAdded:Connect(function(Child)
                 elseif Player.Character.Race.Value == "Namekian" then
                     Talk("Character Slot Changer", {"Yes", "k", Settings.NamekSlot}, Settings.WaitTimeSlotChange + 0.3, {"Change Character Slots?", "Alright", "Which slot would you like to play in?", "Loading!"}, true, true)
 
-                    task.wait(6)
+                    task.wait(5)
 
                     Talk("Start New Game [Redo Character]", {"No", "k", "No"}, 0.6, nil, false, true)
                 end
@@ -219,7 +219,7 @@ end)
 if not Settings.IsPointSlotANamekian and Player.Character.Race.Value ~= "Namekian" then
     Talk("Character Slot Changer", {"Yes", "k", Settings.NamekSlot}, Settings.WaitTimeSlotChange, {"Change Character Slots?", "Alright", "Which slot would you like to play in?", "Loading!"}, true)
 
-    task.wait(6)
+    task.wait(4)
 end
 
 if tonumber(Player.PlayerGui.HUD.Bottom.Stats.StatPoints.Val.Text) == Settings.MaxStatPoints then
@@ -292,7 +292,7 @@ Conn = Player.CharacterAdded:Connect(function()
     -- Teletransportar al personaje a una posición específica
     repeat
         task.wait()
-        Player.Character.HumanoidRootPart.CFrame = CFrame.new(2643.00, 4029.78, -2274.12)
+        Player.Character.HumanoidRootPart.CFrame = CFrame.new(-455.61, 27.99, -6409.75)
     until Player.Character:FindFirstChild("PowerOutput")
 
     -- Conexión secundaria: Monitorear cambios en el texto de ChatGui
@@ -344,7 +344,7 @@ Conn = Player.CharacterAdded:Connect(function()
             local Char = Player.Character
 
             -- Intentar cambiar ranura nuevamente después de 6 segundos
-            task.delay(2, function()
+            task.delay(1, function()
                 Stop = false
                 if Player.Character == Char then
                     if took == "namek" then
@@ -368,7 +368,7 @@ task.spawn(function()
 
             Stop = true
 
-            task.wait(6 + Settings.CharacterDelayTime)
+            task.wait(5 + Settings.CharacterDelayTime)
 
             if not Settings.IsPointSlotANamekian and Player.Character.Race.Value ~= "Namekian" then
                 local Tries = 0
@@ -376,7 +376,7 @@ task.spawn(function()
                 repeat
                     Talk("Character Slot Changer", {"Yes", "k", Settings.NamekSlot}, Settings.WaitTimeSlotChange + 0.3, {"Change Character Slots?", "Alright", "Which slot would you like to play in?", "Loading!"}, true, true)
 
-                    task.wait(2)
+                    task.wait(1)
 
                     if Tries >= 3 then
                         makefolder("VeeruzRejoin")
@@ -393,7 +393,7 @@ task.spawn(function()
             elseif Player.Character.Race.Value == "Namekian" then
                 Talk("Character Slot Changer", {"Yes", "k", Settings.NamekSlot}, Settings.WaitTimeSlotChange + 0.3, {"Change Character Slots?", "Alright", "Which slot would you like to play in?", "Loading!"}, true, true)
 
-                task.wait(6)
+                task.wait(5)
 
                 Talk("Start New Game [Redo Character]", {"No", "k", "No"}, 0.6, nil, false, true)
             end
@@ -490,7 +490,7 @@ if Fixing then
     repeat task.wait() until not Fixing
 end
 
-task.wait(0.5)
+task.wait(0.2)
 
 -- Asegurarse de que el personaje tiene "PowerOutput"
 Player.Character:WaitForChild("PowerOutput", 30)
