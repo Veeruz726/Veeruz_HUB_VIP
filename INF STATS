@@ -39,7 +39,7 @@ local HardResets = 0
 local Successful = 0
 local Failed = 0
 
-Finished = false
+ _G.Finished = false
 
 Last = false
 
@@ -59,7 +59,7 @@ if game.PlaceId == 552500546 then
         task.wait(0.5)
         Player.Backpack.Scripter.RemoteEvent:FireServer(PG.Setup.Frame.Side.Race,"up")
         task.wait(0.5)
-        if PG.Setup.Frame.Side.Race.Set.Texter.Text == "Namekian" then break end
+        if PG.Setup.Frame.Side.Race.Set.Texter.Text == "Namekian" then _G.breakk end
 
     until PG.Setup.Frame.Side.Race.Set.Texter.Text == "Namekian"
 
@@ -127,21 +127,21 @@ local function Talk(NPC, Content, WaitTime, Texts, Wait, SkipStop)
                 end
             end)
 
-            break
+            _G.breakk
         end
 
         Player.Backpack.ServerTraits.ChatAdvance:FireServer({Content[idx]})
     end
 end
 
-if Player.PlayerGui:FindFirstChild("HUD") and not Finished then
+if Player.PlayerGui:FindFirstChild("HUD") and not  _G.Finished then
     task.wait(0.1)
 
     Player.PlayerGui.HUD.Bottom.ChatGui.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
         if Player.PlayerGui.HUD.Bottom.ChatGui.TextLabel.Text == "Mr Popo is a nice guy" then
             Stop = true
 
-            task.wait(6 + Settings.CharacterDelayTime)
+            task.wait(5 + Settings.CharacterDelayTime)
 
             if not Settings.IsPointSlotANamekian and Player.Character.Race.Value ~= "Namekian" then
                 local Tries = 0
@@ -175,7 +175,7 @@ if Player.PlayerGui:FindFirstChild("HUD") and not Finished then
 end
 
 PG.ChildAdded:Connect(function(Child)
-    if Child.Name == "HUD" and not Finished then
+    if Child.Name == "HUD" and not  _G.Finished then
         task.wait(0.1)
 
         Player.PlayerGui.HUD.Bottom.ChatGui.TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
@@ -226,14 +226,14 @@ if tonumber(Player.PlayerGui.HUD.Bottom.Stats.StatPoints.Val.Text) == Settings.M
     if not Settings.IsPointSlotANamekian and Player.Character.Race.Value == "Namekian" then
             Talk("Character Slot Changer", {"Yes", "k", Settings.NamekSlot}, Settings.WaitTimeSlotChange + 0.3, {"Change Character Slots?", "Alright", "Which slot would you like to play in?", "Loading!"}, true)
 
-        task.wait(6)
+        task.wait(5)
     end
 
     Talk("Start New Game [Redo Character]", {"Yes", "k", "Yes"}, 0.6, nil, false)
 end
 
 if tonumber(Player.PlayerGui.HUD.Bottom.Stats.StatPoints.Val.Text) >= Settings.MaxPoints then
-    Finished = true
+     _G.Finished = true
     Player.PlayerGui.HUD.Bottom.Stats.Labvel.TextLabel.Text = "MAX POINTS REACHED"
 
     SendNotification("Veeruz", "Max points reached", 5)
@@ -306,7 +306,7 @@ Conn = Player.CharacterAdded:Connect(function()
             Doing = true
 
             -- Finalizar conexiones si el proceso ya está terminado
-            if Finished then
+            if  _G.Finished then
                 Conn:Disconnect()
                 Conn2:Disconnect()
                 return
@@ -398,7 +398,7 @@ task.spawn(function()
                 Talk("Start New Game [Redo Character]", {"No", "k", "No"}, 0.6, nil, false, true)
             end
 
-            break
+            _G.breakk
         end
 
         task.wait()
@@ -496,7 +496,7 @@ task.wait(0.2)
 Player.Character:WaitForChild("PowerOutput", 30)
 task.wait(Settings.CharacterDelayTime)
 
-local breakk = false -- Variable para controlar la interrupción del bucle principal
+_G.breakk = false -- Variable para controlar la interrupción del bucle principal
 
 -- Intentar ejecutar la lógica principal
 pcall(function()
@@ -540,10 +540,10 @@ pcall(function()
 
     -- Verificar si los puntos de estadísticas han alcanzado el máximo
     if tonumber(Player.PlayerGui.HUD.Bottom.Stats.StatPoints.Val.Text) >= Settings.MaxPoints then
-        Finished = true
+         _G.Finished = true
         PG.HUD.Bottom.Stats.Labvel.TextLabel.Text = "Terminaste | Puntos Max"
         SendNotification("Veeruz", "Puntos Max", 5)
-        breakk = true -- Señalar que se debe interrumpir el flujo principal
+        _G.breakk = true -- Señalar que se debe interrumpir el flujo principal
         return
     end
 end)
@@ -558,7 +558,7 @@ task.spawn(function()
 end)
 
 -- Salir del flujo principal si se ha alcanzado el máximo
-if breakk then
+if _G.breakk then
     return
 end
 
