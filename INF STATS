@@ -59,7 +59,7 @@ if game.PlaceId == 552500546 then
         task.wait(0.5)
         Player.Backpack.Scripter.RemoteEvent:FireServer(PG.Setup.Frame.Side.Race,"up")
         task.wait(0.5)
-        if PG.Setup.Frame.Side.Race.Set.Texter.Text == "Namekian" then _G.breakk end
+        if PG.Setup.Frame.Side.Race.Set.Texter.Text == "Namekian" then breakk end
 
     until PG.Setup.Frame.Side.Race.Set.Texter.Text == "Namekian"
 
