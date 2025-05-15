@@ -222,23 +222,35 @@ if not Settings.IsPointSlotANamekian and Player.Character.Race.Value ~= "Namekia
     task.wait(4)
 end
 
-if tonumber(Player.PlayerGui.HUD.Bottom.Stats.StatPoints.Val.Text) == Settings.MaxStatPoints then
-    if not Settings.IsPointSlotANamekian and Player.Character.Race.Value == "Namekian" then
-            Talk("Character Slot Changer", {"Yes", "k", Settings.NamekSlot}, Settings.WaitTimeSlotChange + 0.3, {"Change Character Slots?", "Alright", "Which slot would you like to play in?", "Loading!"}, true)
+-- Bucle principal de verificación
+task.spawn(function()
+    while not Finished do
+        local currentPoints = tonumber(Player.PlayerGui.HUD.Bottom.Stats.StatPoints.Val.Text)
+        local currentRace = Player.Character.Race.Value
 
-        task.wait(6)
+        -- Solo verificamos MaxStatPoints si el personaje es Namekiano
+        if currentRace == "Namekian" and currentPoints == Settings.MaxStatPoints then
+            if not Settings.IsPointSlotANamekian then
+                Talk("Character Slot Changer", {"Yes", "k", Settings.NamekSlot}, Settings.WaitTimeSlotChange + 0.3, {
+                    "Change Character Slots?", "Alright", "Which slot would you like to play in?", "Loading!"
+                }, true)
+                task.wait(6)
+            end
+
+            Talk("Start New Game [Redo Character]", {"Yes", "k", "Yes"}, 0.6, nil, false)
+        end
+
+        -- Verificación general para cualquier raza
+        if currentPoints >= Settings.MaxPoints then
+            Finished = true
+            Player.PlayerGui.HUD.Bottom.Stats.Labvel.TextLabel.Text = "MAX POINTS REACHED"
+            SendNotification("Veeruz", "Max points reached", 5)
+            break -- Salimos del bucle
+        end
+
+        task.wait(0.5) -- Espera entre ciclos para rendimiento
     end
-
-    Talk("Start New Game [Redo Character]", {"Yes", "k", "Yes"}, 0.6, nil, false)
-end
-
-if tonumber(Player.PlayerGui.HUD.Bottom.Stats.StatPoints.Val.Text) >= Settings.MaxPoints then
-    Finished = true
-    Player.PlayerGui.HUD.Bottom.Stats.Labvel.TextLabel.Text = "MAX POINTS REACHED"
-
-    SendNotification("Veeruz", "Max points reached", 5)
-    return
-end
+end)
 
 -- Definimos la función para manejar el caso de nivel menor a 44
 local function HandleLevelBelow44()
@@ -459,22 +471,18 @@ end
 
 -- Función principal para manejar la ejecución
 local function main()
-    -- Busca los objetos de chat
-    local firstChatObject = workspace.FriendlyNPCs:FindFirstChild("KAMI") or game.ReplicatedStorage.Hidden:FindFirstChild("KAMI")
-    local secondChatObject = workspace.FriendlyNPCs:FindFirstChild("KAMI") or game.ReplicatedStorage.Hidden:FindFirstChild("KAMI")
+    -- Busca el objeto de chat una sola vez
+    local chatObject = workspace.FriendlyNPCs:FindFirstChild("KAMI") 
+                    or game.ReplicatedStorage.Hidden:FindFirstChild("KAMI")
 
-    -- Ejecuta las operaciones en paralelo usando coroutines
-    if firstChatObject and secondChatObject then
+    if chatObject then
+        -- Ejecuta grantPoints dos veces en paralelo
         task.spawn(function()
-            grantPoints(firstChatObject)
+            grantPoints(chatObject)
         end)
         task.spawn(function()
-            grantPoints(secondChatObject)
+            grantPoints(chatObject)
         end)
-    elseif firstChatObject then
-        grantPoints(firstChatObject)
-    elseif secondChatObject then
-        grantPoints(secondChatObject)
     else
         warn("No se encontró ningún objeto KAMI.")
     end
