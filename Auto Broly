@@ -1,47 +1,54 @@
--- Crear el botón de Queue
+local SpammingMoves = false
+
+local Moves = {
+    "Big Bang Kamehameha";
+    "Blaster Meteor";
+}
+
+local BrolyFrame = script.Parent:WaitForChild("BrolyFrame") -- Se asume que este script es hijo del OuterFrame o cerca, y que BrolyFrame existe.
+
+-- BOTONES Y FRAMES DENTRO DE BROLYFRAME
+
 local queueButton = Instance.new("TextButton")
 queueButton.Name = "QueueButton"
-queueButton.Size = UDim2.new(0, 150, 0, 30) -- Tamaño
-queueButton.Position = UDim2.new(1, -160, 0.5, 45) 
-queueButton.Text = "Queue" -- Texto del botón
+queueButton.Size = UDim2.new(0, 150, 0, 30)
+queueButton.Position = UDim2.new(1, -160, 0, 10)  -- Posicionado dentro de BrolyFrame (ajustado a top right)
+queueButton.Text = "Queue"
 queueButton.Font = Enum.Font.SourceSansBold
 queueButton.TextSize = 18
-queueButton.TextColor3 = Color3.new(1, 1, 1) -- Color del texto (blanco)
-queueButton.BackgroundColor3 = Color3.new(0, 0, 0) -- Color de fondo (negro)
-queueButton.Parent = autoBrolyFrame
+queueButton.TextColor3 = Color3.new(1, 1, 1)
+queueButton.BackgroundColor3 = Color3.new(0, 0, 0)
+queueButton.Parent = BrolyFrame
 
--- Crear el botón de Slots
 local slotsButton = Instance.new("TextButton")
 slotsButton.Name = "SlotsButton"
-slotsButton.Size = UDim2.new(0, 150, 0, 30) -- Tamaño
-slotsButton.Position = UDim2.new(1, -160, 0.5, 80) 
-slotsButton.Text = "Slots" -- Texto del botón
+slotsButton.Size = UDim2.new(0, 150, 0, 30)
+slotsButton.Position = UDim2.new(1, -160, 0, 50)
+slotsButton.Text = "Slots"
 slotsButton.Font = Enum.Font.SourceSansBold
 slotsButton.TextSize = 18
-slotsButton.TextColor3 = Color3.new(1, 1, 1) -- Color del texto (blanco)
-slotsButton.BackgroundColor3 = Color3.new(0, 0, 0) -- Color de fondo (negro)
-slotsButton.Parent = autoBrolyFrame
+slotsButton.TextColor3 = Color3.new(1, 1, 1)
+slotsButton.BackgroundColor3 = Color3.new(0, 0, 0)
+slotsButton.Parent = BrolyFrame
 
--- Crear el menú de opciones de Slots
 local slotsMenu = Instance.new("Frame")
 slotsMenu.Name = "SlotsMenu"
-slotsMenu.Size = UDim2.new(0, 150, 0, 90) -- Tamaño del menú
-slotsMenu.Position = UDim2.new(1, -160, 0.5, 120) 
-slotsMenu.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2) -- Color de fondo del menú
-slotsMenu.Visible = false -- Inicialmente oculto
-slotsMenu.Parent = autoBrolyFrame
+slotsMenu.Size = UDim2.new(0, 150, 0, 90)
+slotsMenu.Position = UDim2.new(1, -160, 0, 90)
+slotsMenu.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+slotsMenu.Visible = false
+slotsMenu.Parent = BrolyFrame
 
--- Crear las opciones de Slot
 local function createSlotButton(slotName, positionY)
     local slotButton = Instance.new("TextButton")
     slotButton.Name = slotName .. "Button"
-    slotButton.Size = UDim2.new(1, 0, 0, 30) -- Tamaño
-    slotButton.Position = UDim2.new(0, 0, 0, positionY) -- 
-    slotButton.Text = slotName -- Texto del botón
+    slotButton.Size = UDim2.new(1, 0, 0, 30)
+    slotButton.Position = UDim2.new(0, 0, 0, positionY)
+    slotButton.Text = slotName
     slotButton.Font = Enum.Font.SourceSans
     slotButton.TextSize = 16
-    slotButton.TextColor3 = Color3.new(1, 1, 1) -- Color del texto (blanco)
-    slotButton.BackgroundColor3 = Color3.new(0, 0, 0) -- Color de fondo (negro)
+    slotButton.TextColor3 = Color3.new(1, 1, 1)
+    slotButton.BackgroundColor3 = Color3.new(0, 0, 0)
     slotButton.Parent = slotsMenu
     return slotButton
 end
@@ -50,37 +57,27 @@ local slot1Button = createSlotButton("Slot 1", 0)
 local slot2Button = createSlotButton("Slot 2", 30)
 local slot3Button = createSlotButton("Slot 3", 60)
 
--- Crear el botón Iniciar
 local startButton = Instance.new("TextButton")
 startButton.Name = "StartButton"
-startButton.Size = UDim2.new(0, 150, 0, 30) -- Tamaño
-startButton.Position = UDim2.new(1, -160, 0.5, -25) -- 
-startButton.Text = "Iniciar" -- Texto del botón
+startButton.Size = UDim2.new(0, 150, 0, 30)
+startButton.Position = UDim2.new(1, -160, 0, -35)
+startButton.Text = "Iniciar"
 startButton.Font = Enum.Font.SourceSansBold
 startButton.TextSize = 18
-startButton.TextColor3 = Color3.new(1, 1, 1) -- Color del texto (blanco)
-startButton.BackgroundColor3 = Color3.new(0, 0, 0) -- Color de fondo (negro)
-startButton.Parent = autoBrolyFrame
+startButton.TextColor3 = Color3.new(1, 1, 1)
+startButton.BackgroundColor3 = Color3.new(0, 0, 0)
+startButton.Parent = BrolyFrame
 
--- Crear el botón de Start Moves
 local startMovesButton = Instance.new("TextButton")
 startMovesButton.Name = "StartMovesButton"
-startMovesButton.Size = UDim2.new(0, 150, 0, 30) -- Tamaño
-startMovesButton.Position = UDim2.new(1, -160, 0.5, 10) -- Ajusta la posición según sea necesario
-startMovesButton.Text = "Start Moves" -- Texto del botón
+startMovesButton.Size = UDim2.new(0, 150, 0, 30)
+startMovesButton.Position = UDim2.new(1, -160, 0, 0)
+startMovesButton.Text = "Start Moves"
 startMovesButton.Font = Enum.Font.SourceSansBold
 startMovesButton.TextSize = 18
-startMovesButton.TextColor3 = Color3.new(1, 1, 1) -- Color del texto (blanco)
-startMovesButton.BackgroundColor3 = Color3.new(0, 0, 0) -- Color de fondo (negro)
-startMovesButton.Parent = autoBrolyFrame
-
-local SpammingMoves = false
-
-local Moves = {
-    "Big Bang Kamehameha",
-    "Blaster Meteor"
-
-}
+startMovesButton.TextColor3 = Color3.new(1, 1, 1)
+startMovesButton.BackgroundColor3 = Color3.new(0, 0, 0)
+startMovesButton.Parent = BrolyFrame
 
 startMovesButton.MouseButton1Click:Connect(function()
     SpammingMoves = not SpammingMoves
@@ -94,21 +91,19 @@ startMovesButton.MouseButton1Click:Connect(function()
                         v.Parent = game.Players.LocalPlayer.Character
                         v:Activate()
                         v:Deactivate()
-                        task.wait(0.120) -- Tiempo entre cada movimiento
+                        task.wait(.1)
                         v.Parent = game.Players.LocalPlayer.Backpack
                     end
                 end
             end
-        
         end
     else
         startMovesButton.Text = "Start Moves"
     end
 end)
 
--- Función para cambiar el slot
-local Player = game.Players.LocalPlayer -- Asumiendo que tienes la variable Player definida
-local Settings = { ChangeSlotTime = 2 } -- Ajusta el tiempo según sea necesario
+local Player = game.Players.LocalPlayer
+local Settings = { ChangeSlotTime = 2 }
 
 local function changeSlot(slot)
     Player.Backpack.ServerTraits.ChatStart:FireServer(workspace.FriendlyNPCs["Character Slot Changer"])
@@ -117,157 +112,90 @@ local function changeSlot(slot)
     task.wait(0.55)
     Player.Backpack.ServerTraits.ChatAdvance:FireServer({"k"})
     task.wait(0.55)
-    Player.Backpack.ServerTraits.ChatAdvance:FireServer({slot}) 
+    Player.Backpack.ServerTraits.ChatAdvance:FireServer({slot})
     task.wait(Settings.ChangeSlotTime)
 end
 
--- Conectar funciones a los botones de Slot
 slot1Button.MouseButton1Click:Connect(function() changeSlot("Slot1") end)
 slot2Button.MouseButton1Click:Connect(function() changeSlot("Slot2") end)
 slot3Button.MouseButton1Click:Connect(function() changeSlot("Slot3") end)
 
--- Detectar enemigos y jugadores en el Workspace
-local function detectEntities()
-    local enemies = {}
-    local players = {}
-
-    for _, obj in pairs(workspace:GetDescendants()) do
-        if obj:IsA("Model") and obj:FindFirstChildOfClass("Humanoid") then
-            if game.Players:FindFirstChild(obj.Name) then
-                table.insert(players, obj) -- Es un jugador
-            else
-                if not obj:FindFirstChild("Quest") then
-                    table.insert(enemies, obj) -- Es un enemigo
-                end
-            end
-        end
-    end
-
-    return enemies, players
-end
-
--- Función para encontrar a Broly entre los enemigos
-local function findBroly(enemies)
-    for _, enemy in pairs(enemies) do
-        if enemy.Name:lower():find("broly") then -- Busca "broly" en el nombre (insensible a mayúsculas)
-            return enemy
-        end
-    end
-    return nil -- Retorna nil si no encuentra a Broly
-end
-
--- Desactivar gravedad del jugador
-local function disableGravity()
-    local character = game.Players.LocalPlayer.Character
-    if character and character:FindFirstChild("Humanoid") then
-        character.Humanoid.PlatformStand = true -- Desactiva la gravedad del jugador
-    end
-end
-
--- Restaurar gravedad del jugador
-local function enableGravity()
-    local character = game.Players.LocalPlayer.Character
-    if character and character:FindFirstChild("Humanoid") then
-        character.Humanoid.PlatformStand = false -- Restaura la gravedad del jugador
-    end
-end
-
--- Orientar la cámara hacia Broly
-local function orientCameraTowards(entity)
-    if entity and entity:FindFirstChild("HumanoidRootPart") then
-        local hrp = entity.HumanoidRootPart
-        local camera = workspace.CurrentCamera
-        camera.CameraType = Enum.CameraType.Scriptable -- Permitir control manual de la cámara
-        camera.CFrame = CFrame.new(camera.CFrame.Position, hrp.Position) -- Apunta la cámara hacia Broly
-    end
-end
-
--- Teletransportar detrás de un NPC
-local function teleportBehind(entity)
-    if entity and entity:FindFirstChild("HumanoidRootPart") then
-        local hrp = entity.HumanoidRootPart
-        local positionBehind = hrp.Position - (hrp.CFrame.LookVector * 5) -- Ajusta la distancia aquí
-        local character = game.Players.LocalPlayer.Character
-        if character and character:FindFirstChild("HumanoidRootPart") then
-            print("Teletransportando detrás de", entity.Name)
-            character.HumanoidRootPart.CFrame = CFrame.new(positionBehind) -- Teletransporta al jugador detrás de Broly
-            orientCameraTowards(entity) -- Orienta la cámara hacia Broly
-        else
-            warn("El jugador no tiene una HumanoidRootPart.")
-        end
-    else
-        warn("El enemigo no tiene una HumanoidRootPart o no existe.")
-    end
-end
-
--- Variables de control del bucle
-local isTeleporting = false
-
--- Función para iniciar el teletransporte continuo detrás de Broly
-local function startTeleportLoop()
-    if isTeleporting then return end -- Evitar múltiples bucles
-    isTeleporting = true
-    disableGravity() -- Desactivar la gravedad
-
-    while isTeleporting do
-        local enemies, _ = detectEntities() -- Detecta enemigos y jugadores
-        local broly = findBroly(enemies) -- Busca a Broly entre los enemigos
-
-        if broly then
-            teleportBehind(broly) -- Teletransporta detrás de Broly y orienta la cámara hacia él
-        else
-            warn("No se encontró a Broly en el Workspace.")
-        end
-
-        task.wait(0.5) -- Espera antes de repetir el teletransporte (ajusta el tiempo si es necesario)
-    end
-
-    enableGravity() -- Restaurar la gravedad al detener el bucle
-    workspace.CurrentCamera.CameraType = Enum.CameraType.Custom -- Restaurar el control de la cámara
-end
-
--- Función para detener el teletransporte continuo
-local function stopTeleportLoop()
-    isTeleporting = false
-    enableGravity() -- Restaurar la gravedad
-    workspace.CurrentCamera.CameraType = Enum.CameraType.Custom -- Restaurar el control de la cámara
-end
-
--- Conectar la función al botón Iniciar
-startButton.MouseButton1Click:Connect(function()
-    if not isTeleporting then
-        print("Iniciando teletransporte continuo detrás de Broly...")
-        startTeleportLoop()
-    else
-        print("Deteniendo teletransporte continuo...")
-        stopTeleportLoop()
-    end
-end)
-
--- Función para teletransportar
 local teleportService = game:GetService("TeleportService")
-local placeId = 3565304751 -- ID del mundo
+local placeId = 3565304751
 
 local function teleportPlayer()
-    local player = game.Players.LocalPlayer
-    teleportService:Teleport(placeId, player)
+    teleportService:Teleport(placeId, Player)
 end
 
--- Función para mostrar/ocultar el menú de Slots
 local function toggleSlotsMenu()
     slotsMenu.Visible = not slotsMenu.Visible
 end
 
--- Conectar la función al botón de Queue
 queueButton.MouseButton1Click:Connect(teleportPlayer)
-
--- Conectar la función al botón de Slots
 slotsButton.MouseButton1Click:Connect(toggleSlotsMenu)
 
--- Esperar 10 segundos antes de teletransportar al queue automáticamente
-task.delay(10000, function()
-    local teleportService = game:GetService("TeleportService")
-    local placeId = 3565304751 -- ID del mundo
-    local player = game.Players.LocalPlayer
-    teleportService:Teleport(placeId, player)
+game:GetService("RunService").Stepped:Connect(function()
+    for _, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+        if v.Name == "Action" or (v.Name == "Attacking") or 
+           (v.Name == "Using") or (v.Name == "hyper") or 
+           (v.Name == "Hyper") or (v.Name == "heavy") or 
+           (v.Name == "KiBlasted") or (v.Name == "Tele") or 
+           (v.Name == "tele") or (v.Name == "Killed") or 
+           (v.Name == "Slow") then
+            v:Destroy()
+        end
+        if game.Players.LocalPlayer.Character.Block.Value then
+            game.Players.LocalPlayer.Character.Block.Value = false
+        end
+    end
 end)
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local player = Players.LocalPlayer
+local camera = workspace.CurrentCamera
+local B = workspace:WaitForChild("Live"):WaitForChild("Broly BR")
+local activated = false
+
+if game.PlaceId == 2050207304 then
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if B and B:FindFirstChild("Humanoid") and B.Humanoid.Health < .1 then
+            game:GetService("TeleportService"):Teleport(3565304751)
+        end
+    end)
+
+    startButton.MouseButton1Click:Connect(function()
+        if activated then return end
+        activated = true
+
+        local character = player.Character or player.CharacterAdded:Wait()
+        local hrp = character:WaitForChild("HumanoidRootPart")
+        local npcHRP = B:WaitForChild("HumanoidRootPart")
+
+        game.Players.LocalPlayer.Backpack.ServerTraits.EatSenzu:FireServer(true)
+        RunService.RenderStepped:Connect(function()
+            if character and hrp and npcHRP then
+                hrp.CFrame = npcHRP.CFrame + npcHRP.CFrame.lookVector * -5
+                camera.CFrame = CFrame.new(hrp.Position, npcHRP.Position) * CFrame.new(0, 5, 19)
+                local humanoid = character:FindFirstChild("Humanoid")
+                if humanoid then
+                    humanoid:ChangeState(Enum.HumanoidStateType.PlatformStanding)
+                end
+                local head = character:FindFirstChild("Head")
+                if head then
+                    if head:FindFirstChild("KnockBacked") then head.KnockBacked:Destroy() end
+                    if head:FindFirstChild("NotHardBack") then head.NotHardBack:Destroy() end
+                end
+            end
+        end)
+    end)
+
+    game:GetService("RunService").RenderStepped:Connect(function()
+        for _, i in pairs(workspace:GetChildren()) do
+            if i.Name == "KiBlast" then
+                i.CFrame = workspace.Live['Broly BR'].HumanoidRootPart.CFrame
+            end
+        end
+    end)
+end
