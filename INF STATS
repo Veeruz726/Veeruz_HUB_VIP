@@ -594,4 +594,10 @@ Player.Character:WaitForChild("PowerOutput", 30)
 task.wait(Settings.CharacterDelayTime)
 
 end
+
+ wait(0.1) -- Esto es clave para permitir que otras partes del script corran
+    
+    if _G.breakk then
+        _G.running = false
+    end
 end
