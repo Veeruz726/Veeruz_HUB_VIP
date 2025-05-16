@@ -547,14 +547,25 @@ pcall(function()
     end
 end)
 
-if tonumber(Player.PlayerGui.HUD.Bottom.Stats.StatPoints.Val.Text) >= Settings.MaxStatPoints then
-    Finished = true
-    PG.HUD.Bottom.Stats.Labvel.TextLabel.Text = "Namek | Puntos Max"
-    SendNotification("Namek", "Puntos Max", 5)
-    breakk = true -- Señalar que se debe interrumpir el flujo principal
-    return
-end
+-- logica que establece un limite de puntos para el namek
+if Player.Character.Race.Value == "Namekian" and not Settings.IsPointSlotANamekian then
+    if tonumber(Player.PlayerGui.HUD.Bottom.Stats.StatPoints.Val.Text) >= Settings.MaxStatPoints then
+        Finished = true
+        PG.HUD.Bottom.Stats.Labvel.TextLabel.Text = "Namek | Puntos Max"
+        SendNotification("Namek", "Puntos Max", 5)
 
+        Talk("Character Slot Changer", {"Yes", "k", Settings.NamekSlot}, Settings.WaitTimeSlotChange + 0.3, {
+            "Change Character Slots?", "Alright", "Which slot would you like to play in?", "Loading!"
+        }, true)
+
+        task.wait(6)
+
+        Talk("Start New Game [Redo Character]", {"Yes", "k", "Yes"}, 0.6, nil, false)
+
+        breakk = true
+        return
+    end
+end
 
 -- Lógica para asignar automáticamente estadísticas
 task.spawn(function()
