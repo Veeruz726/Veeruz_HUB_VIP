@@ -504,7 +504,8 @@ task.wait(0.2)
 Player.Character:WaitForChild("PowerOutput", 30)
 task.wait(Settings.CharacterDelayTime)
 
-local breakk = false -- Variable para controlar la interrupción del bucle principal
+ -- Variable para controlar la interrupción del bucle principal
+_G.breakk = false
 
 -- Intentar ejecutar la lógica principal
 pcall(function()
@@ -566,7 +567,7 @@ task.spawn(function()
 end)
 
 -- Salir del flujo principal si se ha alcanzado el máximo
-if breakk then
+if _G.breakk then
     return
 end
 
