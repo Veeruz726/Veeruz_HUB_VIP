@@ -1,3 +1,5 @@
+while _G.running do
+
 local x = "kys"
 
 local Player = game.Players.LocalPlayer
@@ -591,4 +593,5 @@ task.wait(0.5)
 Player.Character:WaitForChild("PowerOutput", 30)
 task.wait(Settings.CharacterDelayTime)
 
+end
 end
