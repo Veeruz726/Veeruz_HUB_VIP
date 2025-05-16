@@ -222,36 +222,26 @@ if not Settings.IsPointSlotANamekian and Player.Character.Race.Value ~= "Namekia
     task.wait(4)
 end
 
--- Bucle principal de verificación
-task.spawn(function()
-    while not Finished do
-        local currentPoints = tonumber(Player.PlayerGui.HUD.Bottom.Stats.StatPoints.Val.Text)
-        local currentRace = Player.Character.Race.Value
+if tonumber(Player.PlayerGui.HUD.Bottom.Stats.StatPoints.Val.Text) >= Settings.MaxStatPoints then
+    Finished = true  -- Paso 1: Marcar como terminado
 
-        -- Solo verificamos MaxStatPoints si el personaje es Namekiano
-        if currentRace == "Namekian" and currentPoints == Settings.MaxStatPoints then
-            if not Settings.IsPointSlotANamekian then
-                Talk("Character Slot Changer", {"Yes", "k", Settings.NamekSlot}, Settings.WaitTimeSlotChange + 0.3, {
-                    "Change Character Slots?", "Alright", "Which slot would you like to play in?", "Loading!"
-                }, true)
-                task.wait(6)
-            end
-
-            Talk("Start New Game [Redo Character]", {"Yes", "k", "Yes"}, 0.6, nil, false)
-        end
-
-        -- Verificación general para cualquier raza
-        if currentPoints >= Settings.MaxPoints then
-            Finished = true
-            Player.PlayerGui.HUD.Bottom.Stats.Labvel.TextLabel.Text = "MAX POINTS REACHED"
-            SendNotification("Veeruz", "Max points reached", 5)
-            break -- Salimos del bucle
-        end
-
-        task.wait(0.5) -- Espera entre ciclos para rendimiento
+    -- Paso 2: Cambiar al slot Namekian si es necesario
+    if not Settings.IsPointSlotANamekian and Player.Character.Race.Value == "Namekian" then
+        Talk("Character Slot Changer", {"Yes", "k", Settings.NamekSlot}, Settings.WaitTimeSlotChange + 0.3, {"Change Character Slots?", "Alright", "Which slot would you like to play in?", "Loading!"}, true)
+        task.wait(6)
     end
-end)
 
+    -- Paso 3: Empezar nuevo juego
+    Talk("Start New Game [Redo Character]", {"Yes", "k", "Yes"}, 0.6, nil, false)
+end
+
+if tonumber(Player.PlayerGui.HUD.Bottom.Stats.StatPoints.Val.Text) >= Settings.MaxPoints then
+    Finished = true
+    Player.PlayerGui.HUD.Bottom.Stats.Labvel.TextLabel.Text = "MAX POINTS REACHED"
+
+    SendNotification("Veeruz", "Max points reached", 5)
+    return
+end
 -- Definimos la función para manejar el caso de nivel menor a 44
 local function HandleLevelBelow44()
     Talk("Bulma", {"k", "Yes", "k"} , Settings.WaitTimeTalk, nil, false)
@@ -557,6 +547,15 @@ pcall(function()
     end
 end)
 
+if tonumber(Player.PlayerGui.HUD.Bottom.Stats.StatPoints.Val.Text) >= Settings.MaxStatPoints then
+    Finished = true
+    PG.HUD.Bottom.Stats.Labvel.TextLabel.Text = "Namek | Puntos Max"
+    SendNotification("Namek", "Puntos Max", 5)
+    breakk = true -- Señalar que se debe interrumpir el flujo principal
+    return
+end
+
+
 -- Lógica para asignar automáticamente estadísticas
 task.spawn(function()
     if Settings.AutoStats then
@@ -567,7 +566,7 @@ task.spawn(function()
 end)
 
 -- Salir del flujo principal si se ha alcanzado el máximo
-if _G.breakk then
+if breakk then
     return
 end
 
